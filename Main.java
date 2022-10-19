@@ -48,6 +48,7 @@ public class Main {
 		reseau.set(2,3,1);
 		reseau.set(1,3,1);
 
+		System.out.println(reseau.getG());
 		return reseau.coupeMin();
    }
 
@@ -68,10 +69,10 @@ public class Main {
 		list.add(2);
 		list.add(3);
 		System.out.println(testMinCut());
-		if (testMinCut().equals(list)){
+		if (testMinCut().equals(list)) {
 			System.out.println("Test ok !");
 		}
-	
+
 		// test à dé-commenter tout à la fin du TP, non noté, juste pour tester avec une "vraie" image!
 
 		/*

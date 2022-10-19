@@ -224,7 +224,13 @@ public class Reseau {
     // TODO ça marche pas !
     public Couple<Flot, ArrayList<Integer>> flotMaxCoupeMinAux(Flot flot) {
         Couple<ArrayList<Integer>, ArrayList<Integer>> cheminResiduel = trouverCheminDansResiduel(flot);
-        if (cheminResiduel.getElement1() == null){
+
+        // Condition d'arret : on a trouver une coupe min
+        if (cheminResiduel.getElement2() == null){
+            return new Couple<>(flot, cheminResiduel.getElement1());
+        }
+        // sinon on continu a chercher dans les chemins restants
+        else {
             int epsilon = Integer.MAX_VALUE;
             for (int i = 0; i < cheminResiduel.getElement2().size() - 1; i++) {
                 int value = g.get(cheminResiduel.getElement2().get(i), cheminResiduel.getElement2().get(i+1));
@@ -233,11 +239,8 @@ public class Reseau {
                 }
             }
             flot.modifieSelonChemin(cheminResiduel.getElement2(), epsilon);
+            return flotMaxCoupeMinAux(flot);
         }
-        if (cheminResiduel.getElement2() == null){
-            return new Couple<>(flot, cheminResiduel.getElement1());
-        }
-        return flotMaxCoupeMinAux(flot);
     }
 
     /**

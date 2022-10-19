@@ -131,7 +131,13 @@ public class InstanceSegmentationGraphe {
     public ArrayList<Integer> calculOpt(){
         //A COMPLETER
         Reseau reseau = new Reseau(this);
-        return reseau.coupeMin();
+        ArrayList<Integer> arrayList = reseau.coupeMin();
+        for (int i=0; i < arrayList.size(); i++){
+            if (arrayList.get(i) == (reseau.getN()-2)){
+                arrayList.remove(i);
+            }
+        }
+        return arrayList;
     }
 
 
