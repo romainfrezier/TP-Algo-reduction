@@ -217,16 +217,22 @@ public class Reseau {
      * pensez à utiliser la méthode "trouverCheminDansResiduel(..)" et "modifieSelonChemin(..) (dans la classe FLot) qui vous sont fournies
      */
     public Couple<Flot, ArrayList<Integer>> flotMaxCoupeMin() {
+        // A COMPLETER
         Flot flot = new Flot(this);
-        return flotMaxCoupeMinAux(flot);
+        int ep = Integer.MAX_VALUE;
+        return flotMaxCoupeMinAux(flot, ep);
     }
 
-    public Couple<Flot, ArrayList<Integer>> flotMaxCoupeMinAux(Flot flot) {
+    public Couple<Flot, ArrayList<Integer>> flotMaxCoupeMinAux(Flot flot, int ep) {
         Couple<ArrayList<Integer>, ArrayList<Integer>> cheminResiduel = trouverCheminDansResiduel(flot);
+
         ArrayList<Integer> mincut = cheminResiduel.getElement1(); // coupe min
         ArrayList<Integer> currentPath = cheminResiduel.getElement2(); // chemin residuel actuel
-        int ep = Integer.MAX_VALUE;
-        while (mincut == null){
+
+
+        if (mincut != null){ // Si la coupe min est trouvé, on est dans la condition d'arrêt
+            return new Couple<>(flot, mincut);
+        } else { // Sinon on continu de chercher la coupe min dans le chemin résiduel
             for (int i = 0; i < currentPath.size() - 1; i++) {
                 int value = g.get(currentPath.get(i), currentPath.get(i+1));
                 if (value != 0) {
@@ -234,11 +240,8 @@ public class Reseau {
                 }
             }
             flot.modifieSelonChemin(currentPath, ep);
-            cheminResiduel = trouverCheminDansResiduel(flot);
-            mincut = cheminResiduel.getElement1(); // coupe min
-            currentPath = cheminResiduel.getElement2(); // chemin residuel actuel
+            return flotMaxCoupeMinAux(flot, ep);
         }
-        return new Couple<>(flot, mincut);
     }
 
 
