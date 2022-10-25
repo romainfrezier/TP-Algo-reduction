@@ -30,11 +30,7 @@ public class InstanceSegmentation {
         //A COMPLETER
         InstanceSegmentationGraphe instanceSegmentationGraphe = new InstanceSegmentationGraphe(this);
         ArrayList<Integer> arrayList = instanceSegmentationGraphe.calculOpt();
-        ArrayList<Couple<Integer,Integer>> coupleArrayList = new ArrayList<>();
-        for (Integer el: arrayList) {
-            coupleArrayList.add(new Couple<>(this.img.calculCoord(el)));
-        }
-	    return coupleArrayList;
+        return this.img.calculFiltre(arrayList);
     }
 
     public Img creerImageSegmentee(){

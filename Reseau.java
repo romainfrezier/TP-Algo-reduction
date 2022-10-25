@@ -234,7 +234,7 @@ public class Reseau {
             return new Couple<>(flot, mincut);
         } else { // Sinon on continu de chercher la coupe min dans le chemin résiduel
             for (int i = 0; i < currentPath.size() - 1; i++) {
-                int value = g.get(currentPath.get(i), currentPath.get(i+1));
+                int value = this.g.get(currentPath.get(i), currentPath.get(i+1));
                 if (value != 0) {
                     ep = Math.min(ep, value);
                 }

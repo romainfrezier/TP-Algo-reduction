@@ -125,7 +125,7 @@ de f qui sont noirs)
                 Couple<Integer,Integer> coord = new Couple<>(i,j);
                 if (b.contains(coord)){
                     newImg.data[i][j] = 255;
-                } else if (B.contains(coord) && !b.contains(coord)) {
+                } else if (B.contains(coord)) {
                     newImg.data[i][j] = 200;
                 } else if (f.contains(coord)) {
                     newImg.data[i][j] = 0;
