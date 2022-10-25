@@ -119,8 +119,20 @@ de f qui sont noirs)
      */
     public Img appliquerFiltre(ArrayList<Couple<Integer,Integer>> B, ArrayList<Couple<Integer,Integer>>f, ArrayList<Couple<Integer,Integer>>b) {
     	//A COMPLETER
-	
- 	return null;
+        Img newImg = new Img(this);
+	    for (int j = 0; j < this.hauteur; j++){
+            for (int i = 0; i < this.largeur; i++){
+                Couple<Integer,Integer> coord = new Couple<>(i,j);
+                if (b.contains(coord)){
+                    newImg.data[i][j] = 255;
+                } else if (B.contains(coord) && !b.contains(coord)) {
+                    newImg.data[i][j] = 200;
+                } else if (f.contains(coord)) {
+                    newImg.data[i][j] = 0;
+                }
+            }
+        }
+ 	    return newImg;
     }
 
 

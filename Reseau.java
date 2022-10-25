@@ -221,27 +221,26 @@ public class Reseau {
         return flotMaxCoupeMinAux(flot);
     }
 
-    // TODO ça marche pas !
     public Couple<Flot, ArrayList<Integer>> flotMaxCoupeMinAux(Flot flot) {
         Couple<ArrayList<Integer>, ArrayList<Integer>> cheminResiduel = trouverCheminDansResiduel(flot);
-
-        // Condition d'arret : on a trouver une coupe min
-        if (cheminResiduel.getElement2() == null){
-            return new Couple<>(flot, cheminResiduel.getElement1());
-        }
-        // sinon on continu a chercher dans les chemins restants
-        else {
-            int epsilon = Integer.MAX_VALUE;
-            for (int i = 0; i < cheminResiduel.getElement2().size() - 1; i++) {
-                int value = g.get(cheminResiduel.getElement2().get(i), cheminResiduel.getElement2().get(i+1));
+        ArrayList<Integer> mincut = cheminResiduel.getElement1(); // coupe min
+        ArrayList<Integer> currentPath = cheminResiduel.getElement2(); // chemin residuel actuel
+        int ep = Integer.MAX_VALUE;
+        while (mincut == null){
+            for (int i = 0; i < currentPath.size() - 1; i++) {
+                int value = g.get(currentPath.get(i), currentPath.get(i+1));
                 if (value != 0) {
-                    epsilon = Math.min(epsilon, value);
+                    ep = Math.min(ep, value);
                 }
             }
-            flot.modifieSelonChemin(cheminResiduel.getElement2(), epsilon);
-            return flotMaxCoupeMinAux(flot);
+            flot.modifieSelonChemin(currentPath, ep);
+            cheminResiduel = trouverCheminDansResiduel(flot);
+            mincut = cheminResiduel.getElement1(); // coupe min
+            currentPath = cheminResiduel.getElement2(); // chemin residuel actuel
         }
+        return new Couple<>(flot, mincut);
     }
+
 
     /**
      * On suppose que this est un réseau quelconque (avec peut être des digons)
@@ -266,5 +265,4 @@ public class Reseau {
         System.out.println("main Reseau");
 
     }
-
 }

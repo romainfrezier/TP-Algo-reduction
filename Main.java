@@ -47,9 +47,14 @@ public class Main {
 		reseau.set(0,2,100);
 		reseau.set(2,3,1);
 		reseau.set(1,3,1);
+		Couple<Flot, ArrayList<Integer>> res = reseau.flotMaxCoupeMin();
 
-		System.out.println(reseau.getG());
-		return reseau.coupeMin();
+		if (res.getElement1().getVal() == 2){ // test si le flot max est bien égale a 2
+			return reseau.coupeMin();
+		} else {
+			return null;
+		}
+
    }
 
     public static void addPoints(ArrayList<Couple<Integer,Integer>> liste, int i, int j, int size){
@@ -64,18 +69,19 @@ public class Main {
 		System.out.println("début Main");
 
 		ArrayList<Integer> list = new ArrayList<>();
+
+		list.add(4);
 		list.add(0);
 		list.add(1);
 		list.add(2);
-		list.add(3);
-		System.out.println(testMinCut());
+
 		if (testMinCut().equals(list)) {
 			System.out.println("Test ok !");
 		}
 
 		// test à dé-commenter tout à la fin du TP, non noté, juste pour tester avec une "vraie" image!
 
-		/*
+
 		Img imageFich = new Img("images/baby_2k.pgm");
 
 
@@ -98,8 +104,6 @@ public class Main {
 		InstanceSegmentation isegFich = new InstanceSegmentation(imageFich,bbF,bbB);
 		Img resFich = isegFich.creerImageSegmentee();
 		resFich.creerImage("images/outputbaby_2k");
-		*/
-
     }
 
 
