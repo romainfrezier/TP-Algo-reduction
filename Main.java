@@ -54,7 +54,20 @@ public class Main {
 		} else {
 			return null;
 		}
+   }
 
+   public static boolean testImage(Img imgProduced){
+		int i = 0, j = 0;
+		boolean res = true;
+	    Img imageFich = new Img("images/outputbaby_2k.pgm");
+		while (res && i < imageFich.nbLignes()){
+			while (res && j < imageFich.nbColonnes()){
+				res = imgProduced.get(i,j) == imageFich.get(i,j);
+				j++;
+			}
+			i++;
+		}
+		return res;
    }
 
     public static void addPoints(ArrayList<Couple<Integer,Integer>> liste, int i, int j, int size){
@@ -104,6 +117,10 @@ public class Main {
 		InstanceSegmentation isegFich = new InstanceSegmentation(imageFich,bbF,bbB);
 		Img resFich = isegFich.creerImageSegmentee();
 		resFich.creerImage("images/outputbaby_2k");
+
+		if (testImage(resFich)){
+			System.out.println("Images identiques !");
+		}
     }
 
 
